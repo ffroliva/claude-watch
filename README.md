@@ -79,6 +79,21 @@ bash scripts/build-skill.sh               # → dist/claude-watch.skill (claude.
 
 Releasing: tag `vX.Y.Z`, push the tag — CI builds and attaches `claude-watch.skill`.
 
+## Project structure
+
+```
+claude-watch/
+├── .claude-plugin/
+│   ├── plugin.json           # metadata only — components are auto-discovered
+│   └── marketplace.json      # lets the repo double as a one-plugin marketplace
+├── SKILL.md                  # the skill (auto-discovered)
+├── commands/claude-watch.md  # the /claude-watch command (auto-discovered)
+├── hooks/hooks.json          # SessionStart preflight hook (auto-discovered)
+└── scripts/                  # yt-dlp / ffmpeg / Whisper pipeline
+```
+
+Claude Code auto-discovers the skill (`SKILL.md`), commands (`commands/*.md`), and hooks (`hooks/hooks.json`) from their conventional paths, so `.claude-plugin/plugin.json` carries **metadata only**. Do **not** redeclare those as `skills` / `commands` / `hooks` fields in `plugin.json` — the installer validates the manifest and rejects those shapes.
+
 ## License
 
 MIT. Built on `yt-dlp`, `ffmpeg`, and Claude's multimodal `Read` tool. Whisper transcription via [Groq](https://groq.com) or [OpenAI](https://openai.com).
